@@ -1,0 +1,21 @@
+{
+  "name": "mastercard_ezaccess_for_issuers_api",
+  "version": "1.0.0",
+  "description": "__https__mstr_cd_320oUJL_https__developer_mastercard_comThis_is_the_Mastercard_EzAccess_for_Issuers_API_This_API_uses_OAuth_1_0a_for_authenticating_client_applications__For_that_please_refer_to__Using_OAuth_1_0a_to_Access_Mastercard_APIs_https__mstr_cd_31YcrTi_The_transport_between_client_applications_and_Mastercard_EzAccess_service_is_secured_using__TLS_SSL_https__w_wiki_PoA_",
+  "license": "Unlicense",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha --recursive"
+  },
+  "browser": {
+    "fs": false
+  },
+  "dependencies": {
+    "superagent": "5.1.0"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^5.2.0",
+    "sinon": "^7.2.0"
+  }
+}

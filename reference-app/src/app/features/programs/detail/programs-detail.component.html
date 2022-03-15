@@ -1,0 +1,17 @@
+<vertical-layout class="programs-detail">
+  <search-action-header title="{{program?.id}} - {{program?.name}}"></search-action-header>
+
+  <div class="programs-detail-main">
+    <div class="programs-detail-info">
+      <div class="programs-detail-description text-hint">
+        {{program?.description}}
+      </div>
+    </div>
+
+    <mat-tab-group class="programs-detail-tab-group" fitInkBarToContent dynamicHeight>
+      <mat-tab label="Cards">
+        <cards-tab></cards-tab>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</vertical-layout>

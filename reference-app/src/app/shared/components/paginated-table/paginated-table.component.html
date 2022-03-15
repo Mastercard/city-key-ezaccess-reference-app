@@ -1,0 +1,36 @@
+<div class="paginated-table-wrapper">
+
+  <table mat-table class="paginated-table-mat-table" [class.clickable]="isClickable"
+         [dataSource]="dataSource$" [trackBy]="trackByFn">
+
+    <ng-content></ng-content>
+
+    <tr mat-footer-row *matFooterRowDef="['emptyData']" class="paginated-table-empty-data-row"
+        [hidden]="(dataSource$ | async)?.length || (isProcessing$ | async)">
+    </tr>
+
+    <tr mat-footer-row *matFooterRowDef="['processing']" class="paginated-table-processing-row"
+        [hidden]="(isProcessing$ | async) !== true">
+    </tr>
+
+    <ng-container matColumnDef="emptyData">
+      <td mat-footer-cell *matFooterCellDef class="paginated-table-empty-data-cell text-hint"
+          [attr.colspan]="columnDefs.length">
+        There are no items to be shown.
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="processing">
+      <td mat-footer-cell *matFooterCellDef class="paginated-table-processing-cell"
+          [attr.colspan]="columnDefs.length">
+        <mat-spinner diameter="32"></mat-spinner>
+      </td>
+    </ng-container>
+
+  </table>
+
+</div>
+
+<mat-paginator class="paginated-table-paginator" [length]="dataTotalLength$ | async" [pageSize]="20"
+               [pageSizeOptions]="[20, 50, 100]" *ngIf="isPaginable">
+</mat-paginator>

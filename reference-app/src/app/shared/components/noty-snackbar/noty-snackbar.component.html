@@ -1,0 +1,15 @@
+<div class="noty-snackbar" [ngClass]="type">
+  <mat-icon class="noty-snackbar-icon text-accent" *ngIf="type === 'success'">
+    check_circle
+  </mat-icon>
+  <mat-icon class="noty-snackbar-icon text-warn" *ngIf="type === 'error'">
+    cancel
+  </mat-icon>
+  <mat-icon class="noty-snackbar-icon text-warn" *ngIf="type === 'warn'">
+    error_outline
+  </mat-icon>
+  <mat-icon class="noty-snackbar-icon text-primary" *ngIf="type === 'info'">
+    info
+  </mat-icon>
+  <div class="noty-snackbar-message">{{message}}</div>
+</div>

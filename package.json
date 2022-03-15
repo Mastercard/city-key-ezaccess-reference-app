@@ -1,0 +1,22 @@
+{
+  "name": "mcea-reference-app",
+  "workspaces": [
+    "api-client",
+    "reference-app",
+    "reference-app-backend"
+  ],
+  "scripts": {
+    "start": "concurrently \"npm:fe\" \"npm:be\"",
+    "fe": "cd reference-app && npm start",
+    "be": "cd reference-app-backend && npm start",
+    "test": "cd reference-app && npm test"
+  },
+  "devDependencies": {
+    "concurrently": "^6.4.0",
+    "rxjs": "^7.5.4"
+  },
+  "engines": {
+    "node": "^16.10",
+    "npm": "^7.0"
+  }
+}

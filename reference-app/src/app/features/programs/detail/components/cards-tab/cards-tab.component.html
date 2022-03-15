@@ -1,0 +1,30 @@
+<paginated-table class="programs-detail-cards-tab-table" [storeSelector]="storeSelector"
+                 (paginationChange)="onPaginationChange($event)">
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+
+  <tr mat-row *matRowDef="let card; columns: displayedColumns"
+      class="programs-detail-cards-tab-table-row">
+  </tr>
+
+  <ng-container matColumnDef="eaid">
+    <th mat-header-cell *matHeaderCellDef scope="col">EAID</th>
+    <td mat-cell *matCellDef="let card">{{card.eaid}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="last4Digits">
+    <th mat-header-cell *matHeaderCellDef scope="col">Card Number</th>
+    <td mat-cell *matCellDef="let card">{{card.last4Digits}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef scope="col">Actions</th>
+    <td mat-cell *matCellDef="let card" (click)="$event.stopPropagation()">
+      <button mat-icon-button type="button" class="programs-detail-cards-tab-unassign-card-btn"
+              matTooltip="Unassign Card" (click)="onUnassignCardBtnClick(card)">
+        <mat-icon>remove_circle_outline</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+</paginated-table>

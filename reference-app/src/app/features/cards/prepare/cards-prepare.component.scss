@@ -1,0 +1,97 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+@use "src/app/shared/styles/variables" as *;
+
+$foreground: map.get($theme, foreground);
+
+.cards-prepare {
+  &-main {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    border-block-start: 1px solid map.get($foreground, divider);
+
+    h1 {
+      margin-block-end: 28px;
+    }
+  }
+
+  &-form,
+  &-associate {
+    &-wrapper {
+      padding: 32px;
+      overflow: auto;
+    }
+  }
+
+  &-form-wrapper {
+    width: 360px;
+  }
+
+  &-associate {
+    &-wrapper {
+      flex: 1;
+      padding-block-end: 0;
+    }
+
+    &-tab-group {
+      ::ng-deep .mat-tab-body {
+        padding-block: 24px;
+      }
+    }
+
+    &-bulk-entry-tab {
+      display: flex;
+      gap: 64px;
+    }
+
+    &-manual-entry-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      h3 {
+        margin-block: 0;
+      }
+    }
+
+    &-uploaded-file-name {
+      margin-inline-start: 1ch;
+    }
+
+    &-table {
+      width: 100%;
+
+      ::ng-deep {
+        .mat-row {
+          height: 56px;
+        }
+
+        .mat-column-check {
+          width: 1px;
+        }
+
+        .mat-cell.mat-column-last4Digits > div {
+          display: flex;
+          gap: 2ch;
+        }
+      }
+
+      &-paginator {
+        position: sticky;
+        bottom: 0;
+      }
+    }
+  }
+
+  &-bottom {
+    display: flex;
+    align-items: center;
+    padding: 24px 48px;
+    border-block-start: 1px solid map.get($foreground, divider);
+  }
+
+  &-add-cards-hint {
+    margin-inline: auto 2ch;
+  }
+}

@@ -1,0 +1,195 @@
+<vertical-layout class="cars-prepare">
+  <search-action-header title="Add Cards"></search-action-header>
+
+  <div class="cards-prepare-main">
+    <div class="cards-prepare-form-wrapper">
+      <div class="cards-prepare-form-header">
+        <h1>1. Create EAIDs</h1>
+      </div>
+
+      <form class="cards-prepare-form" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <mat-form-field class="cards-prepare-form-rangeId" appearance="outline">
+          <mat-label>Range ID</mat-label>
+          <input matInput [formControl]="rangeId" type="number" cdkFocusInitial>
+          <mat-hint>rangeId should be in range 1 to 500</mat-hint>
+          <mat-error *ngIf="rangeId.hasError('number')">
+            {{'Range ID' | validationMsg:'number'}}
+          </mat-error>
+          <mat-error *ngIf="rangeId.hasError('min')">
+            {{'Range ID' | validationMsg:'min':1}}
+          </mat-error>
+          <mat-error *ngIf="rangeId.hasError('max')">
+            {{'Range ID' | validationMsg:'max':500}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="cards-prepare-form-startNumber" appearance="outline">
+          <mat-label>Start Number</mat-label>
+          <input matInput [formControl]="startNumber" type="number">
+          <mat-hint>startNumber should be in range 1 to 500</mat-hint>
+          <mat-error *ngIf="startNumber.hasError('number')">
+            {{'Start Number' | validationMsg:'number'}}
+          </mat-error>
+          <mat-error *ngIf="startNumber.hasError('min')">
+            {{'Start Number' | validationMsg:'min':1}}
+          </mat-error>
+          <mat-error *ngIf="startNumber.hasError('max')">
+            {{'Start Number' | validationMsg:'max':500}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="cards-prepare-form-endNumber" appearance="outline">
+          <mat-label>End Number</mat-label>
+          <input matInput [formControl]="endNumber" type="number">
+          <mat-hint>endNumber should be in range 1 to 500</mat-hint>
+          <mat-error *ngIf="endNumber.hasError('number')">
+            {{'End Number' | validationMsg:'number'}}
+          </mat-error>
+          <mat-error *ngIf="endNumber.hasError('min')">
+            {{'End Number' | validationMsg:'min':1}}
+          </mat-error>
+          <mat-error *ngIf="endNumber.hasError('max')">
+            {{'End Number' | validationMsg:'max':500}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-checkbox class="cards-prepare-form-showUnused" color="primary"
+                      [formControl]="showUnused" ngDefaultControl>
+          Show Unused Only
+        </mat-checkbox>
+
+        <div class="form-actions">
+          <button mat-flat-button class="cards-prepare-form-submit-btn" type="button"
+                  color="primary" (click)="onSubmit()"
+                  [disabled]="form.invalid || (isCreateEaidsProcessing$ | async)">
+            <mat-spinner *ngIf="isCreateEaidsProcessing$ | async" diameter="16"></mat-spinner>
+            <span>Submit</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <mat-divider [vertical]="true"></mat-divider>
+
+    <div class="cards-prepare-associate-wrapper">
+      <div class="cards-prepare-associate-header">
+        <h1>2. Associate Cards</h1>
+
+        <p>Download created EAIDs, edit it offline and upload it OR manually enter details here.</p>
+
+        <mat-tab-group class="cards-prepare-associate-tab-group"
+                       (selectedIndexChange)="onTabSelectedIndexChange($event)" fitInkBarToContent
+                       dynamicHeight>
+
+          <mat-tab label="Bulk Entry">
+            <div class="cards-prepare-associate-bulk-entry-tab">
+              <div>
+                <p>To enter bulk data, download created EAIDs and edit it offline.</p>
+                <a mat-flat-button class="cards-prepare-associate-download-btn" type="button"
+                   [href]="encodedCsv ?? '' | safe:'resourceUrl'" [disabled]="!encodedCsv"
+                   download="eaids.csv" color="primary">
+                  Download Generated EAIDs
+                </a>
+              </div>
+              <div>
+                <p>Upload updated EAIDs CSV file with filled "programId" and "last4Digits"</p>
+                <button mat-flat-button color="primary" type="button"
+                        class="cards-prepare-associate-upload-btn file-input-btn"
+                        (click)="fileInput.click()">
+                  <input #fileInput type="file" accept=".csv" (change)="onFileChange($event)">
+                  <span>Upload Updated EAIDs</span>
+                </button>
+                <span class="cards-prepare-associate-uploaded-file-name">{{fileName}}</span>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Manual Entry">
+            <div class="cards-prepare-associate-manual-entry-tab">
+              <h3>Enter data manually</h3>
+              <button mat-flat-button class="cards-prepare-assign-program-btn" type="button"
+                      color="primary" (click)="onAssignProgramBtnClick()"
+                      [disabled]="!selection.hasValue()">
+                Assign Program
+              </button>
+            </div>
+          </mat-tab>
+
+        </mat-tab-group>
+      </div>
+
+      <p class="cards-prepare-associate-table-selected-count" *ngIf="selectedTabIdx === 1">
+        <strong>{{selection.selected.length}}</strong> row(s) selected
+      </p>
+
+      <table mat-table class="cards-prepare-associate-table" [dataSource]="tableEaids">
+        <tr mat-header-row *matHeaderRowDef="columns; sticky:true"></tr>
+
+        <tr mat-row *matRowDef="let row; columns:columns"></tr>
+
+        <tr mat-footer-row *matFooterRowDef="['emptyData']" [hidden]="tableEaids?.data?.length">
+        </tr>
+
+        <ng-container matColumnDef="check">
+          <th mat-header-cell *matHeaderCellDef scope="col">
+            <mat-checkbox color="primary" (change)="$event ? allSelectionsToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected"
+                          [indeterminate]="selection.hasValue() && !isAllSelected">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox color="primary" (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="eaid">
+          <th mat-header-cell *matHeaderCellDef scope="col">EAID</th>
+          <td mat-cell *matCellDef="let row">{{row.eaid}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="programId">
+          <th mat-header-cell *matHeaderCellDef scope="col">Program</th>
+          <td mat-cell *matCellDef="let row">{{row.programId}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="last4Digits">
+          <th mat-header-cell *matHeaderCellDef scope="col">Card</th>
+          <td mat-cell *matCellDef="let row">
+            <div>
+              {{row.last4Digits}}
+              <a class="cards-prepare-assign-card-btn" type="button" color="primary"
+                 (click)="onAssignCardBtnClick($event, row)" href="#" *ngIf="selectedTabIdx === 1">
+                <span *ngIf="!row.last4Digits">Assign Card</span>
+                <mat-icon *ngIf="row.last4Digits">edit</mat-icon>
+              </a>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="emptyData">
+          <td mat-footer-cell *matFooterCellDef class="text-hint" [attr.colspan]="columns.length">
+            Prepared EAIDs will be shown here.
+          </td>
+        </ng-container>
+      </table>
+      <mat-paginator class="cards-prepare-associate-table-paginator"
+                     [length]="tableEaids?.data?.length ?? 0" [pageSize]="10"
+                     [pageSizeOptions]="[10, 20, 50, 100]">
+      </mat-paginator>
+    </div>
+  </div>
+
+  <div class="cards-prepare-bottom">
+    <span class="cards-prepare-add-cards-hint">
+      {{validEntries.length}} valid card entries to add.
+    </span>
+    <button mat-flat-button class="cards-prepare-add-cards-btn" type="button" color="primary"
+            (click)="onAddCardsBtnClick()"
+            [disabled]="(isRegisterCardsProcessing$ | async) || !hasValidEntries">
+      <mat-spinner *ngIf="isRegisterCardsProcessing$ | async" diameter="16"></mat-spinner>
+      <span>Add Cards</span>
+    </button>
+  </div>
+</vertical-layout>

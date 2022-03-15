@@ -1,0 +1,10 @@
+<div class="search-action-header-title-bar">
+  <button mat-icon-button class="search-action-header-back-btn" type="button"
+          [routerLink]="backLink" *ngIf="backLink">
+    <mat-icon>arrow_back_ios_new</mat-icon>
+  </button>
+  <h2 class="search-action-header-title">{{title}}</h2>
+  <div class="search-action-header-actions">
+    <ng-container *ngTemplateOutlet="actionsRef"></ng-container>
+  </div>
+</div>

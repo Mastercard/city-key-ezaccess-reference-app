@@ -1,0 +1,36 @@
+@font-face {
+  font-family: MarkForMC;
+  src: url("./MarkForMC/MarkForMC.ttf");
+}
+
+@font-face {
+  font-family: MarkForMC;
+  font-weight: 500;
+  src: url("./MarkForMC/MarkForMC-Med.ttf");
+}
+
+@font-face {
+  font-family: MarkForMC;
+  font-weight: 600;
+  src: url("./MarkForMC/MarkForMC-Bold.ttf");
+}
+
+@font-face {
+  font-family: MarkForMC;
+  font-style: italic;
+  src: url("./MarkForMC/MarkForMC-It.ttf");
+}
+
+@font-face {
+  font-family: MarkForMC;
+  font-weight: 500;
+  font-style: italic;
+  src: url("./MarkForMC/MarkForMC-MedIt.ttf");
+}
+
+@font-face {
+  font-family: MarkForMC;
+  font-weight: 600;
+  font-style: italic;
+  src: url("./MarkForMC/MarkForMC-BoldIt.ttf");
+}

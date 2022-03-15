@@ -1,0 +1,578 @@
+openapi: 3.0.3
+info:
+  title: Mastercard Ezaccess For Issuers API
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: apisupport@mastercard.com
+    url: https://developer.mastercard.com/support
+  description: >-
+    [![](https://mstr.cd/320oUJL)](https://developer.mastercard.com)
+
+
+    This is the Mastercard EzAccess for Issuers API.
+
+
+    This API uses OAuth 1.0a for authenticating client applications. For that, please refer to [Using OAuth 1.0a to Access Mastercard APIs](https://mstr.cd/31YcrTi).
+
+
+    The transport between client applications and Mastercard EzAccess service is secured
+    using [TLS/SSL](https://w.wiki/PoA).
+
+
+servers:
+  - url: https://sandbox.api.mastercard.com/city-key-ezaccess
+    description: "Sandbox environment"
+  - url: https://api.mastercard.com/city-key-ezaccess
+    description: "Production environment"
+
+tags:
+  - name: Card preparation
+    description: Operations specific to preparing a card for use in Mastercard EzAccess.
+  - name: Card operations
+    description: Operations specific to managing the lifecycle of card usage in Mastercard EzAccess.
+
+paths:
+  /eaids:
+    post:
+      tags:
+        - Card preparation
+      summary: Generate list of Mastercard EzAccess IDs (EAIDs).
+      operationId: generateEAIDs
+      description: Generate list of Mastercard EzAccess IDs (EAIDs), each with its own Luhn checksum. An EAID may be used for card production in EMV tag 9F6E. Numbers in between startNumber and endNumber are the actual number of EAIDs generated including the startNumber and the endNumber. The maximum number of EAIDs that can be generated per request is 500.
+      requestBody:
+        $ref: "#/components/requestBodies/CardBatchRequest"
+      responses:
+        '200':
+          $ref: "#/components/responses/CardEaidListResponse"
+        '400':
+          $ref: "#/components/responses/BadRequestErrorResponse"
+        '404':
+          $ref: "#/components/responses/NotFoundErrorResponse"
+
+  /programs:
+    get:
+      tags:
+        - Card operations
+      summary: Fetch a paginated list of programs.
+      description: Fetch a paginated list of programs associated with issuer in Mastercard EzAccess
+      operationId: getPrograms
+      parameters:
+        - $ref: "#/components/parameters/OffsetParameter"
+        - $ref: "#/components/parameters/LimitParameter"
+      responses:
+        '200':
+          $ref: "#/components/responses/ProgramsResponse"
+        '400':
+          $ref: "#/components/responses/BadRequestErrorResponse"
+        '404':
+          $ref: "#/components/responses/NotFoundErrorResponse"
+
+  /cards:
+    post:
+      tags:
+        - Card operations
+      summary: Register list of card EAIDs
+      description: Register multiple Mastercard EzAccess IDs (EAIDs) to be enabled for Mastercard EzAccess. Registered cards are allowed to access the selected facilities participating in Mastercard EzAccess.
+      operationId: registerCards
+      requestBody:
+        $ref: "#/components/requestBodies/RegisterCardRequest"
+      responses:
+        '200':
+          $ref: "#/components/responses/RegisterCardReponse"
+        '400':
+          $ref: "#/components/responses/BadRequestErrorResponse"
+        '404':
+          $ref: "#/components/responses/NotFoundErrorResponse"
+        '409':
+          $ref: "#/components/responses/AlreadyExistsErrorResponse"
+    get:
+      tags:
+        - Card operations
+      summary: Fetch a paginated list of cards.
+      description: Fetch a paginated list of cards registered for Mastercard EzAccess for the given program code.
+      operationId: getCards
+      parameters:
+        - $ref: "#/components/parameters/ProgramIdQueryParameter"
+        - $ref: "#/components/parameters/OffsetParameter"
+        - $ref: "#/components/parameters/LimitParameter"
+      responses:
+        '200':
+          $ref: "#/components/responses/CardsResponse"
+        '400':
+          $ref: "#/components/responses/BadRequestErrorResponse"
+        '404':
+          $ref: "#/components/responses/NotFoundErrorResponse"
+
+  /cards/{card_eaid}:
+    put:
+      tags:
+        - Card operations
+      summary: Block or unblock a card.
+      description: Update a card's status in Mastercard EzAccess as Blocked or Active. Blocked cards are disabled from being used for Mastercard EzAaccess. Active cards are enabled for use in Mastercard EzAccess.
+      operationId: updateCard
+      parameters:
+        - $ref: "#/components/parameters/CardEAIDParameter"
+      requestBody:
+        $ref: "#/components/requestBodies/CardStatusRequest"
+      responses:
+        '200':
+          $ref: "#/components/responses/CardLifecycleResponse"
+        '400':
+          $ref: "#/components/responses/BadRequestErrorResponse"
+        '404':
+          $ref: "#/components/responses/NotFoundErrorResponse"
+    post:
+      tags:
+        - Card operations
+      summary: Replace a card EAID.
+      description: Transfer an existing card's associated programs to a new EAID for use in Mastercard EzAccess. The current card EAID will be disabled from being used in Mastercard EzAccess.
+      operationId: replaceCard
+      parameters:
+        - $ref: "#/components/parameters/CardEAIDParameter"
+      requestBody:
+        $ref: "#/components/requestBodies/ReplaceCardRequest"
+      responses:
+        '200':
+          $ref: "#/components/responses/ReplaceCardResponse"
+        '400':
+          $ref: "#/components/responses/BadRequestErrorResponse"
+        '404':
+          $ref: "#/components/responses/NotFoundErrorResponse"
+        '409':
+          $ref: "#/components/responses/AlreadyExistsErrorResponse"
+
+  /programs/{program_id}/cards:
+    put:
+      tags:
+        - Card operations
+      summary: Associate a card with a program.
+      description: Associate an existing card with the given Mastercard EzAccess program. The card will be allowed to access facilities participating in the associated Mastercard EzAccess program.
+      operationId: addCardToProgram
+      parameters:
+        - $ref: "#/components/parameters/ProgramIdPathParameter"
+      requestBody:
+        $ref: "#/components/requestBodies/AddCardToProgramRequest"
+      responses:
+        '200':
+          $ref: "#/components/responses/AddCardToProgramResponse"
+        '400':
+          $ref: "#/components/responses/BadRequestErrorResponse"
+        '404':
+          $ref: "#/components/responses/NotFoundErrorResponse"
+
+  /programs/{program_id}/cards/{card_eaid}:
+    delete:
+      tags:
+        - Card operations
+      summary: Remove a card from a program.
+      description: Unassociate a card for a specific Mastercard EzAccess program.The card will not be allowed to access facilities participating in the Mastercard EzAccess program.
+      operationId: removeCard
+      parameters:
+        - $ref: "#/components/parameters/ProgramIdPathParameter"
+        - $ref: "#/components/parameters/CardEAIDParameter"
+      responses:
+        '200':
+          $ref: "#/components/responses/RemoveCardFromProgramResponse"
+        '400':
+          $ref: "#/components/responses/BadRequestErrorResponse"
+        '404':
+          $ref: "#/components/responses/NotFoundErrorResponse"
+
+components:
+  parameters:
+
+    CardEAIDParameter:
+      name: card_eaid
+      in: path
+      description: The Mastercard EzAccess ID (EAID) for the given card.
+      required: true
+      example: "0000010001000022"
+      schema:
+        $ref: '#/components/schemas/CardEaid'
+    ProgramIdPathParameter:
+      name: program_id
+      in: path
+      description: Program code known to the issuer for enrolling specified cards for Mastercard EzAccess.
+      required: true
+      example: "31PN50K95W"
+      schema:
+        $ref: '#/components/schemas/ProgramId'
+    ProgramIdQueryParameter:
+      name: program_id
+      in: query
+      description: Program code known to the issuer for enrolling specified cards for Mastercard EzAccess.
+      required: false
+      example: "31PN50K95W"
+      schema:
+        $ref: '#/components/schemas/ProgramId'
+    OffsetParameter:
+      name: offset
+      in: query
+      required: false
+      description:  The number of items you asked the start of the list to be offset from.
+      example: 0
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    LimitParameter:
+      name: limit
+      in: query
+      required: false
+      description: The number of items you asked the list to be limited to.
+      example: 10
+      schema:
+        type: integer
+        minimum: 1
+        default: 10
+
+  schemas:
+    CardEaid:
+      type: string
+      description: The 16-digit Mastercard EzAccess ID (EAID) of the card.
+      example: "0000010001000022"
+      minLength: 16
+      maxLength: 16
+    EnrolledCard:
+      allOf:
+        - $ref: '#/components/schemas/Card'
+        - type: object
+          description: Properties of an issuer-assigned card.
+          properties:
+            status:
+              $ref: '#/components/schemas/CardStatus'
+    Card:
+      type: object
+      description: Properties of card.
+      properties:
+        last4Digits:
+          type: integer
+          description: The last 4 digits of a card PAN.
+          example: 4444
+          minimum: 0000
+          maximum: 9999
+        eaid:
+          $ref: '#/components/schemas/CardEaid'
+    CardStatus:
+      type: string
+      description: "Status of the card. Acceptable values are: ACTIVE, BLOCKED"
+      example: ACTIVE
+      minLength: 1
+      maxLength: 16
+    ProgramId:
+      type: string
+      description: The program code given to the issuer for participating in a Mastercard EzAccess program.
+      example: "31PN50K95W"
+      minLength: 1
+      maxLength: 16
+    ProgramIds:
+      type: array
+      description: List of programs assigned to card in a Mastercard EzAccess program.
+      items:
+        type: "string"
+      example: [ "31PN50K95W", "51HN50J95R" ]
+    CardProgram:
+      type: object
+      properties:
+        programIds:
+          type: array
+          description: List of programs for which issuer-generated card EAIDs are to be enrolled in Mastercard EzAccess program.
+          items:
+            $ref: "#/components/schemas/ProgramId"
+        cards:
+          type: array
+          description: List of issuer-generated card EAIDs to enroll to the specified Mastercard EzAccess program.
+          items:
+            $ref: "#/components/schemas/Card"
+    RangeId:
+      type: integer
+      description: The range ID of a group of card EAIDs. Range IDs are assigned by an issuer to help identify card EAIDs associated with a particular Mastercard EzAccess program.
+      example: 1
+      minimum: 1
+      maximum: 9999
+    CardRange:
+      type: object
+      properties:
+        rangeId:
+          $ref: "#/components/schemas/RangeId"
+        startNumber:
+          type: integer
+          description: The starting card number to be included for generating an EAID.
+          example: 1
+          minimum: 1
+          maximum: 99999
+        endNumber:
+          type: integer
+          description: The ending card number to be included for generating an EAID.
+          example: 500
+          minimum: 1
+          maximum: 99999
+        showUnused:
+          type: boolean
+          description: "If this value is set to true, only unused EAID values will be returned. If this value is set to false, both used and unused EAIDs will be returned. Acceptable values are: true, false"
+          example: false
+          default: false
+    CardPrograms:
+      allOf:
+        - $ref: '#/components/schemas/Card'
+        - type: object
+          description: Properties of an issuer-assigned card.
+          properties:
+            status:
+              $ref: '#/components/schemas/CardStatus'
+            programIds:
+              $ref: '#/components/schemas/ProgramIds'
+    Program:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          description: "Program Id"
+          minLength: 1
+          maxLength: 16
+          example: "31PN50K95W"
+        name:
+          type: "string"
+          description: "Name of Mastercard EzAccess Program"
+          minLength: 1
+          maxLength: 255
+          example: "NORD Health"
+        description:
+          type: "string"
+          description: "Description of Mastercard EzAccess Program"
+          minLength: 1
+          maxLength: 255
+          example: "Health Program by NORD"
+    UpdateCardStatus:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/CardStatus"
+    ReplaceCardEaid:
+      type: object
+      properties:
+        eaid:
+          $ref: "#/components/schemas/CardEaid"
+    AssignCardEaid:
+      type: object
+      properties:
+        eaid:
+          $ref: "#/components/schemas/CardEaid"
+    Pagination:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 1
+          description: The number of items in this batch.
+        offset:
+          type: integer
+          example: 1
+          description: The number of items you asked the start of the list to be offset from.
+        limit:
+          type: integer
+          example: 1
+          description: The number of items you asked the list to be limited to.
+        total:
+          type: integer
+          example: 1
+          description: The total number of items in the collection.
+    Error:
+      type: object
+      required:
+        - Errors
+      properties:
+        Errors:
+          required:
+            - Error
+          type: object
+          properties:
+            Error:
+              $ref: "#/components/schemas/Errors"
+    Errors:
+      type: array
+      minItems: 1
+      items:
+        $ref: "#/components/schemas/ErrorDetail"
+    ErrorDetail:
+      type: object
+      properties:
+        Source:
+          type: string
+          example: "API"
+          description: "Source of the error"
+          minLength: 1
+          maxLength: 255
+        ReasonCode:
+          type: string
+          description: "0001"
+          example: "INVALID_DATA"
+          minLength: 1
+          maxLength: 255
+        Description:
+          type: string
+          description: "Describe the invalid input"
+          example: "Invalid input data"
+          minLength: 1
+          maxLength: 255
+        Recoverable:
+          type: boolean
+          example: true
+          description: "Whether the error is recoverable"
+        Details:
+          type: string
+          minLength: 0
+          maxLength: 255
+          example: "name"
+          description: "name"
+
+  requestBodies:
+    CardBatchRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CardRange"
+    RegisterCardRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CardProgram"
+    CardStatusRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateCardStatus"
+    ReplaceCardRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ReplaceCardEaid"
+    AddCardToProgramRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/AssignCardEaid"
+
+  responses:
+    CardEaidListResponse:
+      description: A list of 16-digit Mastercard EzAccess IDs (EAIDs) was successfully generated.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              eaids:
+                type: array
+                description: A list of generated eaid values.
+                items:
+                  $ref: "#/components/schemas/CardEaid"
+    RegisterCardReponse:
+      description: The given card EAID was successfully registered for Mastercard EzAccess.
+    CardLifecycleResponse:
+      description: The card status was successfully updated in Mastercard EzAccess.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnrolledCard"
+    RemoveCardFromProgramResponse:
+      description: The given card EAID is no longer associated with the specified Mastercard EzAccess program.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnrolledCard"
+    AddCardToProgramResponse:
+      description: The card EAID was successfully associated with the given Mastercard EzAccess program.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnrolledCard"
+    ReplaceCardResponse:
+      description: The old card EAID was successfully replaced with the new card EAID.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/EnrolledCard"
+    CardsResponse:
+      description: A list of paginated cards was successfully generated.
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: object
+                description: A list of paginated cards
+                allOf:
+                  - $ref: "#/components/schemas/Pagination"
+                  - type: object
+                properties:
+                  items:
+                    description: A list of requested card values.
+                    items:
+                      $ref: "#/components/schemas/CardPrograms"
+    ProgramsResponse:
+      description: A list of paginated programs was successfully generated.
+      content:
+        application/json:
+          schema:
+            properties:
+              data:
+                type: object
+                description: A list of paginated programs
+                allOf:
+                  - $ref: "#/components/schemas/Pagination"
+                  - type: object
+                properties:
+                  items:
+                    description: A list of requested program values.
+                    items:
+                      $ref: "#/components/schemas/Program"
+    BadRequestErrorResponse:
+      description: Request contains incorrect or out of scope parameters.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    NotFoundErrorResponse:
+      description: The URI didn't match an existing resource.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          examples:
+            IdentityNotFoundExample:
+              $ref: "#/components/examples/CardNotFoundExample"
+    AlreadyExistsErrorResponse:
+      description: The URI is already an existing resource.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          examples:
+            IdentityAlreadyExistsExample:
+              $ref: "#/components/examples/CardAlreadyExistsExample"
+
+  examples:
+    CardNotFoundExample:
+      value:
+        Errors:
+          Error:
+            - Source: API
+              ReasonCode: NOT_FOUND
+              Description: You requested for something we don't have.
+              Recoverable: false
+              Details: Card 0000010001000013 does not exist.
+    CardAlreadyExistsExample:
+      value:
+        Errors:
+          Error:
+            - Source: API
+              ReasonCode: CONFLICT
+              Description: You requested for something which already exists
+              Recoverable: false
+              Details: Card 0000010001000040 already exists.

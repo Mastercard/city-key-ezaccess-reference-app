@@ -1,0 +1,25 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.paginated-table {
+  &-wrapper {
+    overflow: auto;
+  }
+
+  &-mat-table {
+    width: 100%;
+  }
+
+  &-empty-data-cell,
+  &-processing-cell {
+    text-align: center;
+  }
+
+  &-processing-cell {
+    mat-spinner {
+      margin: auto;
+    }
+  }
+}

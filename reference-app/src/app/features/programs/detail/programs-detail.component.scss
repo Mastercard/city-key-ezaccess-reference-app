@@ -1,0 +1,19 @@
+@use "@angular/material" as mat;
+@use "src/app/shared/styles/variables" as *;
+
+.programs-detail {
+  &-main {
+    padding-inline: 32px;
+    flex: 1;
+    overflow: auto;
+  }
+
+  &-info {
+    margin-block: 16px 48px;
+    margin-inline-start: 48px;
+
+    & > * {
+      margin-block-end: 16px;
+    }
+  }
+}

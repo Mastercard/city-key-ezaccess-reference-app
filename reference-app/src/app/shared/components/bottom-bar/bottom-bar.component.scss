@@ -1,0 +1,12 @@
+@use "sass:map";
+@use "src/app/shared/styles/variables" as *;
+
+$foreground: map.get($theme, foreground);
+
+:host {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 32px;
+  color: $light-primary-text;
+  background: map.get($foreground, text);
+}

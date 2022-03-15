@@ -1,0 +1,33 @@
+<div class="mat-dialog-title-bar">
+  <h1 mat-dialog-title>Assign Card</h1>
+  <button mat-icon-button mat-dialog-close aria-label="close dialog">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <form class="cards-prepare-assign-card-dialog-form" [formGroup]="form" (ngSubmit)="onSubmit()"
+        novalidate>
+    <mat-form-field class="cards-prepare-assign-card-dialog-form-last4Digits" appearance="outline">
+      <mat-label>Last 4 Digits</mat-label>
+      <input matInput [formControl]="last4Digits" type="text" cdkFocusInitial>
+      <mat-error *ngIf="last4Digits.hasError('number')">
+        {{'Last 4 Digits' | validationMsg:'number'}}
+      </mat-error>
+      <mat-error *ngIf="last4Digits.hasError('minlength') || last4Digits.hasError('maxlength')">
+        {{'Last 4 Digits' | validationMsg:'length':4}}
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button class="cards-prepare-assign-card-dialog-submit-btn" type="button"
+          color="primary" (click)="onSubmit()" [disabled]="form.invalid">
+    <span>Assign</span>
+  </button>
+  <button mat-stroked-button mat-dialog-close class="cards-prepare-assign-card-dialog-cancel-btn"
+          type="button" color="primary">
+    Cancel
+  </button>
+</mat-dialog-actions>

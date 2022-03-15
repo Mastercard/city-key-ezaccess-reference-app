@@ -1,0 +1,124 @@
+@use "@angular/material" as mat;
+
+$background: #fff;
+$dark-primary-text: rgba(black, 0.87);
+$light-primary-text: white;
+
+$mc-orange: (
+  50: #ffece0,
+  100: #ffd0b3,
+  200: #ffb080,
+  300: #ff904d,
+  400: #ff7926,
+  500: #ff6100,
+  600: #ff5900,
+  700: #ff4f00,
+  800: #ff4500,
+  900: #ff3300,
+  A100: #ffffff,
+  A200: #fff4f2,
+  A400: #ffc8bf,
+  A700: #ffb2a6,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
+
+$mc-green: (
+  50: #f1f7e6,
+  100: #ddeac0,
+  200: #c6dc97,
+  300: #afce6d,
+  400: #9ec44d,
+  500: #8db92e,
+  600: #85b229,
+  700: #7aaa23,
+  800: #70a21d,
+  900: #5d9312,
+  A100: #e5ffc5,
+  A200: #ceff92,
+  A400: #b7ff5f,
+  A700: #abff46,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
+
+$mc-red: (
+  50: #fde0e4,
+  100: #f9b3bb,
+  200: #f5808d,
+  300: #f14d5f,
+  400: #ee263d,
+  500: #eb001b,
+  600: #e90018,
+  700: #e50014,
+  800: #e20010,
+  900: #dd0008,
+  A100: #ffffff,
+  A200: #ffd1d2,
+  A400: #ff9e9f,
+  A700: #ff8586,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
+
+$typography-config: mat.define-typography-config(
+  $font-family:
+    "MarkForMC, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji",
+  $button: mat.define-typography-level(inherit, inherit, 500),
+);
+
+$primary-palette: mat.define-palette($mc-orange);
+$accent-palette: mat.define-palette($mc-green);
+$warn-palette: mat.define-palette($mc-red);
+
+$theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $primary-palette,
+      accent: $accent-palette,
+      warn: $warn-palette,
+    ),
+  )
+);

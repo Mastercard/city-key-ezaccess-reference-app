@@ -1,0 +1,192 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*",
+    "package-lock.json",
+    "dist",
+    "src/*.ts"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "eslint:recommended",
+        "plugin:import/recommended",
+        "plugin:import/typescript",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "settings": {
+        "import/extensions": [
+          ".ts"
+        ],
+        "import/resolver": {
+          "typescript": {}
+        }
+      },
+      "rules": {
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "style": "kebab-case"
+          }
+        ],
+        "no-multiple-empty-lines": [
+          "error",
+          {
+            "max": 1,
+            "maxBOF": 0
+          }
+        ],
+        "no-multi-spaces": "error",
+        "no-trailing-spaces": "error",
+        "block-spacing": "error",
+        "space-before-blocks": "error",
+        "key-spacing": "error",
+        "array-bracket-spacing": [
+          "error",
+          "never"
+        ],
+        "space-in-parens": [
+          "error",
+          "never"
+        ],
+        "padded-blocks": [
+          "error",
+          "never"
+        ],
+        "eqeqeq": [
+          "error",
+          "always"
+        ],
+        "quotes": "off",
+        "@typescript-eslint/quotes": [
+          "error",
+          "single"
+        ],
+        "semi": "off",
+        "@typescript-eslint/semi": [
+          "error",
+          "never"
+        ],
+        "indent": "off",
+        "@typescript-eslint/indent": [
+          "error",
+          2
+        ],
+        "object-curly-spacing": "off",
+        "@typescript-eslint/object-curly-spacing": [
+          "error",
+          "always"
+        ],
+        "keyword-spacing": "off",
+        "@typescript-eslint/keyword-spacing": "error",
+        "func-call-spacing": "off",
+        "@typescript-eslint/func-call-spacing": "error",
+        "brace-style": "off",
+        "@typescript-eslint/brace-style": [
+          "error",
+          "1tbs",
+          {
+            "allowSingleLine": true
+          }
+        ],
+        "space-before-function-paren": "off",
+        "@typescript-eslint/space-before-function-paren": [
+          "error",
+          {
+            "anonymous": "always",
+            "named": "never",
+            "asyncArrow": "always"
+          }
+        ],
+        "space-infix-ops": "off",
+        "@typescript-eslint/space-infix-ops": [
+          "error",
+          {
+            "int32Hint": false
+          }
+        ],
+        "dot-notation": "off",
+        "@typescript-eslint/dot-notation": "error",
+        "comma-spacing": "off",
+        "@typescript-eslint/comma-spacing": "error",
+        "comma-dangle": "off",
+        "@typescript-eslint/comma-dangle": "error",
+        "no-useless-constructor": "off",
+        "@typescript-eslint/no-useless-constructor": "error",
+        "lines-between-class-members": "off",
+        "@typescript-eslint/lines-between-class-members": [
+          "error",
+          "always",
+          {
+            "exceptAfterSingleLine": true
+          }
+        ],
+        "@typescript-eslint/type-annotation-spacing": [
+          "error",
+          {
+            "overrides": {
+              "arrow": {
+                "before": true,
+                "after": true
+              }
+            }
+          }
+        ],
+        "@typescript-eslint/prefer-nullish-coalescing": "error",
+        "@typescript-eslint/prefer-optional-chain": "error",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "import/order": [
+          "error",
+          {
+            "groups": [
+              [
+                "builtin",
+                "external"
+              ],
+              "internal",
+              [
+                "parent",
+                "sibling"
+              ],
+              "index",
+              "object",
+              "type"
+            ],
+            "newlines-between": "always"
+          }
+        ],
+        "import/newline-after-import": "error",
+        "import/no-unassigned-import": "error",
+        "import/no-self-import": "error",
+        "import/no-cycle": "error"
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ]
+    }
+  ]
+}

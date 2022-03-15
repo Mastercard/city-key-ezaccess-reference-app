@@ -1,0 +1,55 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+@use "src/app/shared/styles/variables" as *;
+
+$foreground: map.get($theme, foreground);
+
+.top-bar {
+  color: $light-primary-text;
+  background: map.get($foreground, text);
+
+  &-home-btn {
+    font-weight: 600;
+    margin-inline-end: 60px;
+
+    img {
+      width: 48px;
+      object-fit: contain;
+      margin-inline-end: 1ch;
+    }
+  }
+
+  &-navigations {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-inline-end: auto;
+    align-self: stretch;
+    display: flex;
+    gap: 12px;
+    font-weight: 400;
+    font-size: mat.font-size($typography-config, "subheading-2");
+  }
+
+  &-navigation-item {
+    &-link {
+      display: flex;
+      align-items: center;
+      position: relative;
+      height: 100%;
+      padding-inline: 8px;
+      color: $light-primary-text;
+
+      &.active:after {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: $light-primary-text;
+      }
+    }
+  }
+}

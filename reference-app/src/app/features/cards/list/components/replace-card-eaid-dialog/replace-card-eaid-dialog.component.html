@@ -1,0 +1,36 @@
+<div class="mat-dialog-title-bar">
+  <h1 mat-dialog-title>Replace Card EAID</h1>
+  <button mat-icon-button mat-dialog-close aria-label="close dialog">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <form class="cards-list-replace-card-eaid-dialog-form" [formGroup]="form" (ngSubmit)="onSubmit()"
+        novalidate>
+
+    <mat-form-field class="cards-list-replace-card-eaid-dialog-form-eaid" appearance="outline">
+      <mat-label>New EAID</mat-label>
+      <input matInput [formControl]="eaid" type="text" cdkFocusInitial>
+      <mat-error *ngIf="eaid.hasError('number')">
+        {{'New EAID' | validationMsg:'number'}}
+      </mat-error>
+      <mat-error *ngIf="eaid.hasError('minlength') || eaid.hasError('maxlength')">
+        {{'New EAID' | validationMsg:'length':16}}
+      </mat-error>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button class="cards-list-replace-card-eaid-dialog-submit-btn" type="button"
+          color="primary" (click)="onSubmit()" [disabled]="form.invalid || (isProcessing$ | async)">
+    <mat-spinner *ngIf="isProcessing$ | async" diameter="16"></mat-spinner>
+    <span>Replace</span>
+  </button>
+  <button mat-stroked-button mat-dialog-close class="cards-list-replace-card-eaid-dialog-cancel-btn"
+          type="button" color="primary" [disabled]="isProcessing$ | async">
+    Cancel
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,34 @@
+<div class="mat-dialog-title-bar">
+  <h1 mat-dialog-title>Assign Program</h1>
+  <button mat-icon-button mat-dialog-close aria-label="close dialog">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <form class="cards-prepare-assign-program-dialog-form" (ngSubmit)="onSubmit()" novalidate>
+    <ng-container *resourceSelect="'programsRes'; let programs$; isLoading$ as isLoading$">
+      <mat-form-field class="cards-prepare-assign-program-dialog-form-programId"
+                      appearance="outline">
+        <mat-label>Select Program</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let program of programs$ | async; trackBy: trackByFn"
+                      [value]="program.id">
+            {{program.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button class="cards-prepare-assign-program-dialog-submit-btn" type="button"
+          color="primary" (click)="onSubmit()" [disabled]="shouldDisableSubmitBtn">
+    <span>Assign</span>
+  </button>
+  <button mat-stroked-button mat-dialog-close class="cards-prepare-assign-program-dialog-cancel-btn"
+          type="button" color="primary">
+    Cancel
+  </button>
+</mat-dialog-actions>

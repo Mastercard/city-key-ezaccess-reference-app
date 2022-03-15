@@ -1,0 +1,16 @@
+<mat-toolbar class="top-bar">
+  <button class="top-bar-home-btn" mat-button type="button" routerLink="/">
+    <img src="assets/images/mastercard.svg" alt="mastercard logo" />
+    <span>EZAccess for Issuer</span>
+  </button>
+  <ul class="top-bar-navigations" *ngIf="shownNavigations.length > 0">
+    <li class="top-bar-navigation-item" [ngClass]="'top-bar-navigation-item-' + item.id"
+        *ngFor="let item of shownNavigations; trackBy: trackByFn">
+      <a class="top-bar-navigation-item-link" matRipple matRippleColor="rgba(255, 255, 255, 0.2)"
+         [routerLink]="item.route" routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: false}">
+        {{item.title}}
+      </a>
+    </li>
+  </ul>
+</mat-toolbar>

@@ -1,0 +1,26 @@
+<div class="mat-dialog-title-bar">
+  <h1 mat-dialog-title>Unassign Program</h1>
+  <button mat-icon-button mat-dialog-close aria-label="close dialog">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <p>
+    Are you sure you want to unassign
+    "<strong>{{data.programId}}</strong>" program
+    from card with EAID "{{data.card.eaid}}"?
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button class="cards-list-unassign-program-dialog-submit-btn" type="button"
+          color="primary" (click)="onSubmit()" [disabled]="isProcessing$ | async">
+    <mat-spinner *ngIf="isProcessing$ | async" diameter="16"></mat-spinner>
+    <span>Unassign</span>
+  </button>
+  <button mat-stroked-button mat-dialog-close class="cards-list-unassign-program-dialog-cancel-btn"
+          [disabled]="isProcessing$ | async" type="button" color="primary">
+    Cancel
+  </button>
+</mat-dialog-actions>

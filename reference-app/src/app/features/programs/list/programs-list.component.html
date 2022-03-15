@@ -1,0 +1,26 @@
+<vertical-layout class="programs-list">
+
+  <search-action-header title="Programs"></search-action-header>
+
+  <paginated-table class="programs-list-table" [storeSelector]="storeSelector"
+                   (paginationChange)="onPaginationChange($event)">
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></tr>
+
+    <tr mat-row *matRowDef="let program; columns: displayedColumns" class="programs-list-table-row"
+        [routerLink]="['/programs', program.id]" [state]="{program}">
+    </tr>
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef scope="col">ID</th>
+      <td mat-cell *matCellDef="let program">{{program.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef scope="col">Name</th>
+      <td mat-cell *matCellDef="let program">{{program.name}}</td>
+    </ng-container>
+
+  </paginated-table>
+
+</vertical-layout>

@@ -1,0 +1,5 @@
+{
+  "useES6" : false,
+  "apiTests": false,
+  "modelTests": false
+}

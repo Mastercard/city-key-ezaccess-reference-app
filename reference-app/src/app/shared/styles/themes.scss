@@ -1,0 +1,5 @@
+@use "@angular/material" as mat;
+@use "src/app/shared/styles/variables" as *;
+
+@include mat.core($typography-config);
+@include mat.all-component-themes($theme);
