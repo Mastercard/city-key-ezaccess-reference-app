@@ -42,3 +42,4 @@ testem.log
 .DS_Store
 
 # project specific
+*.p12

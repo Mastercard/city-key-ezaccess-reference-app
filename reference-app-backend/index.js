@@ -8,11 +8,9 @@ const fs = require('fs')
 const oauth = require('mastercard-oauth1-signer')
 const apiSdk = require('mastercard_ezaccess_for_issuers_api')
 
-// const { consumerKey, signingKey } = loadKeys()
+const { consumerKey, signingKey } = loadKeys()
 const clientInstance = apiSdk.ApiClient.instance
 
-// TEMP
-clientInstance.basePath = 'http://localhost:8080/public/issuers'
 clientInstance.applyAuthToRequest = request => {
   const _end = request._end
   request._end = function () {
@@ -22,7 +20,7 @@ clientInstance.applyAuthToRequest = request => {
   return request
 }
 
-// configApiClient(consumerKey, signingKey)
+configApiClient(consumerKey, signingKey)
 
 const app = express()
 app.use(bodyParser.json())
