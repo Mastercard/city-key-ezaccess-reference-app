@@ -26,7 +26,7 @@
         <mat-form-field class="cards-prepare-form-startNumber" appearance="outline">
           <mat-label>Start Number</mat-label>
           <input matInput [formControl]="startNumber" type="number">
-          <mat-hint>startNumber should be in range 1 to 500</mat-hint>
+          <mat-hint>startNumber should be in range 1 to 99999</mat-hint>
           <mat-error *ngIf="startNumber.hasError('number')">
             {{'Start Number' | validationMsg:'number'}}
           </mat-error>
@@ -41,7 +41,7 @@
         <mat-form-field class="cards-prepare-form-endNumber" appearance="outline">
           <mat-label>End Number</mat-label>
           <input matInput [formControl]="endNumber" type="number">
-          <mat-hint>endNumber should be in range 1 to 500</mat-hint>
+          <mat-hint>endNumber should be in range from startNumber to 99999 and should be no more than 500 from startNumber</mat-hint>
           <mat-error *ngIf="endNumber.hasError('number')">
             {{'End Number' | validationMsg:'number'}}
           </mat-error>
