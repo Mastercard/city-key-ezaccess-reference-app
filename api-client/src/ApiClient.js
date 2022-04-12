@@ -47,9 +47,9 @@
     /**
      * The base URL against which to resolve every API call's (relative) path.
      * @type {String}
-     * @default https://sandbox.api.mastercard.com/city-key-ezaccess
+     * @default https://stage.api.mastercard.com/city-key-ezaccess/public/issuers/
      */
-    this.basePath = 'https://sandbox.api.mastercard.com/city-key-ezaccess'.replace(/\/+$/, '');
+    this.basePath = 'https://stage.api.mastercard.com/city-key-ezaccess/public/issuers/'.replace(/\/+$/, '');
 
     /**
      * The authentication methods to be included for all API calls.
@@ -637,7 +637,7 @@
               'description': "Sandbox environment",
             },
             {
-              'url': "https://api.mastercard.com/city-key-ezaccess",
+              'url': "https://stage.api.mastercard.com/city-key-ezaccess",
               'description': "Production environment",
             }
       ];
