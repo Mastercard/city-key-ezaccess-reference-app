@@ -28,6 +28,7 @@ MCAPI_P12_PATH=[Your path to MCAPI p12 file related to reference-app-backend]
 MCAPI_CONSUMER_KEY=[Your MCAPI consumer key]
 MCAPI_KEYSTORE_PASSWORD=[Your MCAPI keystore password]
 MCAPI_KEY_ALIAS=[Your MCAPI key alias]
+BASE_PATH=[base path, default to https://stage.api.mastercard.com/city-key-ezaccess/public/issuers]
 ```
 
 ### Install Dependencies

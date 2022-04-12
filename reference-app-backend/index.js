@@ -98,6 +98,7 @@ function loadKeys() {
 }
 
 function configApiClient(consumerKey, signingKey) {
+  clientInstance.basePath = process.env.BASE_PATH || clientInstance.basePath
   clientInstance.applyAuthToRequest = request => {
     const _end = request._end
     request._end = function () {
