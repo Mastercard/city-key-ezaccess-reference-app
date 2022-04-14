@@ -19,7 +19,7 @@
             {{'Range ID' | validationMsg:'min':1}}
           </mat-error>
           <mat-error *ngIf="rangeId.hasError('max')">
-            {{'Range ID' | validationMsg:'max':500}}
+            {{'Range ID' | validationMsg:'max':9999}}
           </mat-error>
         </mat-form-field>
 
@@ -34,7 +34,7 @@
             {{'Start Number' | validationMsg:'min':1}}
           </mat-error>
           <mat-error *ngIf="startNumber.hasError('max')">
-            {{'Start Number' | validationMsg:'max':500}}
+            {{'Start Number' | validationMsg:'max':99999}}
           </mat-error>
         </mat-form-field>
 
@@ -49,7 +49,7 @@
             {{'End Number' | validationMsg:'min':1}}
           </mat-error>
           <mat-error *ngIf="endNumber.hasError('max')">
-            {{'End Number' | validationMsg:'max':500}}
+            {{'End Number' | validationMsg:'max':99999}}
           </mat-error>
         </mat-form-field>
 
