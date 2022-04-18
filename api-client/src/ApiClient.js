@@ -49,7 +49,7 @@
      * @type {String}
      * @default https://stage.api.mastercard.com/city-key-ezaccess/public/issuers/
      */
-    this.basePath = 'https://stage.api.mastercard.com/city-key-ezaccess/public/issuers/'.replace(/\/+$/, '');
+    this.basePath = 'http://localhost:8080/public/issuers'.replace(/\/+$/, '');
 
     /**
      * The authentication methods to be included for all API calls.
