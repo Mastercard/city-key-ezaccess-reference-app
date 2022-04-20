@@ -8,7 +8,6 @@ const fs = require('fs')
 const oauth = require('mastercard-oauth1-signer')
 const apiSdk = require('mastercard_ezaccess_for_issuers_api')
 
-const { consumerKey, signingKey } = loadKeys()
 const clientInstance = apiSdk.ApiClient.instance
 
 clientInstance.applyAuthToRequest = request => {
@@ -20,7 +19,12 @@ clientInstance.applyAuthToRequest = request => {
   return request
 }
 
-configApiClient(consumerKey, signingKey)
+try {
+  const { consumerKey, signingKey } = loadKeys()
+  configApiClient(consumerKey, signingKey)
+} catch (e) {
+  console.warn('WARNING!: cannot create config based on .env file.  error: ' + e.message + '\n . Assume connecting to local development server.')
+}
 
 const app = express()
 app.use(bodyParser.json())

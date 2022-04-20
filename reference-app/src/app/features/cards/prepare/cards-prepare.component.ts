@@ -180,9 +180,9 @@ export class CardsPrepareComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _createForm(): void {
     this.form = this._formBuilder.group({
-      rangeId: [1, [Validators.required, CustomValidators.number, CustomValidators.min(1), CustomValidators.max(500)]],
-      startNumber: [1, [Validators.required, CustomValidators.number, CustomValidators.min(1), CustomValidators.max(500)]],
-      endNumber: [20, [Validators.required, CustomValidators.number, CustomValidators.min(1), CustomValidators.max(500)]],
+      rangeId: [1, [Validators.required, CustomValidators.number, CustomValidators.min(1), CustomValidators.max(9999)]],
+      startNumber: [1, [Validators.required, CustomValidators.number, CustomValidators.min(1), CustomValidators.max(99999)]],
+      endNumber: [20, [Validators.required, CustomValidators.number, CustomValidators.min(1),  CustomValidators.max(99999)]],
       showUnused: [true]
     })
   }
