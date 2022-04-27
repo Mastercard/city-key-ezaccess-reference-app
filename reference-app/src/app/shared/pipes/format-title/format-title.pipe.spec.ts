@@ -9,6 +9,6 @@ describe(FormatTitlePipe.name, () => {
     const pipe = new FormatTitlePipe()
 
     expect(pipe.transform(CardStatusType.ACTIVE, 'cardStatus')).toEqual(CARD_STATUS_DICT.ACTIVE)
-    expect(pipe.transform(CardStatusType.ACTIVE, undefined)).toEqual('')
+    expect(pipe.transform(CardStatusType.ACTIVE)).toEqual('')
   })
 })

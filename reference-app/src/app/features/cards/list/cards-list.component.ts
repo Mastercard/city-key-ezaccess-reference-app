@@ -12,6 +12,7 @@ import { FeatureState } from './ngrx/cards-list.reducer'
 import { CardsListReplaceCardEaidDialogComponent } from './components/replace-card-eaid-dialog/replace-card-eaid-dialog.component'
 import { CardsListAssignProgramDialogComponent } from './components/assign-program-dialog/assign-program-dialog.component'
 import { CardsListUnassignProgramDialogComponent } from './components/unassign-program-dialog/unassign-program-dialog.component'
+import { CardsListChangeCardStatusDialogComponent } from './components/change-card-status-dialog/change-card-status-dialog.component'
 
 @UntilDestroy()
 @Component({
@@ -52,10 +53,11 @@ export class CardsListComponent implements OnInit, OnDestroy {
     this._loadData()
   }
 
-  onChangeCardStatusBtnClick(card: any): void {
-    this._store.dispatch(new ChangeCardStatus(card.eaid, {
-      status: card.status === CardStatusType.ACTIVE ? CardStatusType.BLOCKED : CardStatusType.ACTIVE
-    }))
+  onChangeCardStatusBtnClick(card: unknown): void {
+    this._matDialog.open(CardsListChangeCardStatusDialogComponent, {
+      panelClass: 'dialog-md',
+      data: { card }
+    })
   }
 
   onReplaceCardEaidBtnClick(card: any): void {

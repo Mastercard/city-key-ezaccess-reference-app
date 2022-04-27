@@ -20,6 +20,7 @@ import { MOCK_CARDS } from 'app/shared/testing/mock-objects'
 import { AssignProgram, AssignProgramSuccess, ChangeCardStatus, ChangeCardStatusSuccess, GetCards, ReplaceCardEaid, ReplaceCardEaidSuccess, Reset, UnassignProgram, UnassignProgramSuccess } from './ngrx/cards-list.actions'
 import { CardsListReplaceCardEaidDialogComponent } from './components/replace-card-eaid-dialog/replace-card-eaid-dialog.component'
 import { CardsListAssignProgramDialogComponent } from './components/assign-program-dialog/assign-program-dialog.component'
+import { CardsListChangeCardStatusDialogComponent } from './components/change-card-status-dialog/change-card-status-dialog.component'
 import { CardsListUnassignProgramDialogComponent } from './components/unassign-program-dialog/unassign-program-dialog.component'
 import { CardsListComponent } from './cards-list.component'
 
@@ -207,11 +208,14 @@ describe(CardsListComponent.name, () => {
       expect(rows[1].querySelector(replaceCardEaidBtnCls)).toBeFalsy()
     })
 
-    it(`should dispatch ${ChangeCardStatus.name} when clicking Change Card Status button`, () => {
+    it(`should open ${CardsListChangeCardStatusDialogComponent.name} when clicking Change Card Status button`, () => {
       fireEvent.click(rows[0].querySelector(changeCardStatusBtnCls))
-      expect(spyStoreDispatch.lastCall.args).toEqual([new ChangeCardStatus(MOCK_CARDS.items[0].eaid, { status: CardStatusType.BLOCKED })])
-      fireEvent.click(rows[1].querySelector(changeCardStatusBtnCls))
-      expect(spyStoreDispatch.lastCall.args).toEqual([new ChangeCardStatus(MOCK_CARDS.items[1].eaid, { status: CardStatusType.ACTIVE })])
+      expect(stubOpen.lastCall.args).toEqual([
+        CardsListChangeCardStatusDialogComponent, {
+          panelClass: 'dialog-md',
+          data: { card: MOCK_CARDS.items[0] }
+        }
+      ])
     })
 
     it(`should open ${CardsListReplaceCardEaidDialogComponent.name} when clicking Replace Card EAID button`, () => {

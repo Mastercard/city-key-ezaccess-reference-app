@@ -1,0 +1,26 @@
+<div class="mat-dialog-title-bar">
+  <h1 mat-dialog-title>{{actionName}} Card</h1>
+  <button mat-icon-button mat-dialog-close aria-label="close dialog">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <p>
+    Are you sure you want to {{actionName | lowercase}}
+    "<strong>{{data.card.last4Digits}}</strong>" card?
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-flat-button class="cards-list-change-card-status-dialog-submit-btn" type="button"
+          color="primary" (click)="onSubmit()" [disabled]="isProcessing$ | async">
+    <mat-spinner *ngIf="isProcessing$ | async" diameter="16"></mat-spinner>
+    <span>{{actionName}}</span>
+  </button>
+  <button mat-stroked-button mat-dialog-close
+          class="cards-list-change-card-status-dialog-cancel-btn" type="button" color="primary"
+          [disabled]="isProcessing$ | async">
+    Cancel
+  </button>
+</mat-dialog-actions>

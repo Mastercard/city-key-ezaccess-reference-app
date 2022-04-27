@@ -12,12 +12,10 @@ export class FormatTitlePipe implements PipeTransform {
     item: any,
     type?: 'cardStatus'
   ): string {
-    switch (type) {
-      case 'cardStatus':
+    if(type==='cardStatus') {
         return formatCardStatusTitle(item)
-
-      default:
-        return ''
+    } else {
+      return ''
     }
   }
 }

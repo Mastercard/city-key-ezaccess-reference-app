@@ -25,6 +25,7 @@ import { CardsListComponent } from './cards-list.component'
 import { CardsListReplaceCardEaidDialogComponent } from './components/replace-card-eaid-dialog/replace-card-eaid-dialog.component'
 import { CardsListAssignProgramDialogComponent } from './components/assign-program-dialog/assign-program-dialog.component'
 import { CardsListUnassignProgramDialogComponent } from './components/unassign-program-dialog/unassign-program-dialog.component'
+import { CardsListChangeCardStatusDialogComponent } from './components/change-card-status-dialog/change-card-status-dialog.component'
 
 const routes: Routes = [
   {
@@ -39,7 +40,8 @@ const routes: Routes = [
     CardsListComponent,
     CardsListReplaceCardEaidDialogComponent,
     CardsListAssignProgramDialogComponent,
-    CardsListUnassignProgramDialogComponent
+    CardsListUnassignProgramDialogComponent,
+    CardsListChangeCardStatusDialogComponent
   ],
   imports: [
     RouterModule.forChild(routes),

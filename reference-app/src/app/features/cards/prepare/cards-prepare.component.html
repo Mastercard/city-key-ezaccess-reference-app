@@ -122,7 +122,7 @@
         <strong>{{selection.selected.length}}</strong> row(s) selected
       </p>
 
-      <table mat-table class="cards-prepare-associate-table" [dataSource]="tableEaids">
+      <table mat-table class="cards-prepare-associate-table" [dataSource]="tableEaids" aria-describedby="tableEaids">
         <tr mat-header-row *matHeaderRowDef="columns; sticky:true"></tr>
 
         <tr mat-row *matRowDef="let row; columns:columns"></tr>

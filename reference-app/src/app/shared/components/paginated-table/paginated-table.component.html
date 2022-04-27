@@ -1,7 +1,7 @@
 <div class="paginated-table-wrapper">
 
   <table mat-table class="paginated-table-mat-table" [class.clickable]="isClickable"
-         [dataSource]="dataSource$" [trackBy]="trackByFn">
+         [dataSource]="dataSource$" [trackBy]="trackByFn" aria-describedby="paginated-table" aria-hidden="true">
 
     <ng-content></ng-content>
 
