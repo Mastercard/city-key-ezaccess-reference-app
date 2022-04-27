@@ -14,6 +14,6 @@ describe(ValidationMsgPipe.name, () => {
     expect(pipe.transform('Name', 'maxlength', 32)).toEqual('Name should not be longer than 32 characters')
     expect(pipe.transform('Name', 'length', 32)).toEqual('Name should have 32 characters')
     expect(pipe.transform('Name', 'alphanumeric')).toEqual('Name should only contain alphanumeric characters')
-    expect(pipe.transform('Email', undefined)).toEqual('')
+    expect(pipe.transform('Email')).toEqual('')
   })
 })
