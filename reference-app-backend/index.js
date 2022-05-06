@@ -10,14 +10,14 @@ const apiSdk = require('mastercard_ezaccess_for_issuers_api')
 
 const clientInstance = apiSdk.ApiClient.instance
 
-// clientInstance.applyAuthToRequest = request => {
-//   const _end = request._end
-//   request._end = function () {
-//     request.req.setHeader('Client-Id', 'f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454')
-//     _end.call(request)
-//   }
-//   return request
-// }
+clientInstance.applyAuthToRequest = request => {
+  const _end = request._end
+  request._end = function () {
+    request.req.setHeader('Client-Id', 'f8c3de3d-1fea-4d7c-a8b0-29f63c4c3454')
+    _end.call(request)
+  }
+  return request
+}
 
 try {
   const { consumerKey, signingKey } = loadKeys()
