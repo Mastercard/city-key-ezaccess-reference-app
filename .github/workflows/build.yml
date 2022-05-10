@@ -40,9 +40,10 @@ jobs:
         with:
           args: >
             -Dsonar.organization=mastercard
-            -Dsonar.projectName=Mastercard_city-key-ezaccess-reference-app
-            -Dsonar.projectKey=Mastercard_city-key-ezaccess-reference-app
-            -Dsonar.sources=reference-app/src -Dsonar.tests=reference-app/src
-            -Dsonar.typescripts.lcov.reportPaths=reference-app/coverage/report-lcov/lcov.info
+            -Dsonar.projectName=oauth1-signer-nodejs
+            -Dsonar.projectKey=Mastercard_oauth1-signer-nodejs
+            -Dsonar.sources=./src -Dsonar.tests=./test
+            -Dsonar.coverage.jacoco.xmlReportPaths=test-results.xml
+            -Dsonar.javascript.lcov.reportPaths=.nyc_output/coverage.lcov
             -Dsonar.host.url=https://sonarcloud.io  -Dsonar.login=${{
             secrets.SONAR_TOKEN }}
