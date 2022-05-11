@@ -42,7 +42,7 @@ jobs:
             -Dsonar.organization=mastercard
             -Dsonar.projectName=Mastercard_city-key-ezaccess-reference-app
             -Dsonar.projectKey=Mastercard_city-key-ezaccess-reference-app
-            -Dsonar.tests=./reference-app/src
+            -Dsonar.sources=./reference-app/src
             -Dsonar.typescript.lcov.reportPaths=./reference-app/coverage/report-lcov/lcov.info
             -Dsonar.host.url=https://sonarcloud.io  -Dsonar.login=${{
             secrets.SONAR_TOKEN }}
