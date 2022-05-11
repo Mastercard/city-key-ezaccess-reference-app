@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs'
 
 import { CardStatusType, OffsetAndLimit } from 'app/shared/constants'
 
-import { CardsListActionTypes, ChangeCardStatus, GetCards, Reset } from './ngrx/cards-list.actions'
+import { CardsListActionTypes, GetCards, Reset } from './ngrx/cards-list.actions'
 import { FeatureState } from './ngrx/cards-list.reducer'
 import { CardsListReplaceCardEaidDialogComponent } from './components/replace-card-eaid-dialog/replace-card-eaid-dialog.component'
 import { CardsListAssignProgramDialogComponent } from './components/assign-program-dialog/assign-program-dialog.component'
