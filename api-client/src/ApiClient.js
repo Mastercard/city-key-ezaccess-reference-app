@@ -47,7 +47,7 @@
     /**
      * The base URL against which to resolve every API call's (relative) path.
      * @type {String}
-     * @default https://stage.api.mastercard.com/city-key-ezaccess/public/issuers/
+     * @default https://sandbox.api.mastercard.com/city-key-ezaccess/public/issuers/
      */
     this.basePath = 'http://localhost:8080/public/issuers'.replace(/\/+$/, '');
 
@@ -637,7 +637,7 @@
               'description': "Sandbox environment",
             },
             {
-              'url': "https://stage.api.mastercard.com/city-key-ezaccess",
+              'url': "https://api.mastercard.com/city-key-ezaccess",
               'description': "Production environment",
             }
       ];
