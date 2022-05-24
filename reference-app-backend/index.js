@@ -116,14 +116,39 @@ function configApiClient(consumerKey, signingKey) {
 
 function handleApiCallback(res) {
   return function (_1, _2, response) {
-    if (response.error) {
-      console.log('**** Error ****')
-      console.log(response.error)
-    }
-    console.log(response.body)
-
-    const resp = response.body.data || response.body
-
-    res.status(response.status).send(response.error ? JSON.parse(response.error.text) : resp)
+  var resp = ''
+  
+  if (response.error) {
+  
+  console.log('**** Error flow ****')
+  
+  resp = response.error.text
+  
+  } else {
+  
+  console.log('**** Positive Flow ****')
+  
+  resp = response.body.data || response.body
+  
+  }
+  
+  console.log("Testing "+response.request.method)
+  
+  console.log(response.request.url)
+  
+  if (response.request.method != 'GET') {
+  
+  console.log("Request Sent :")
+  
+  console.log(response.request._data)
+  
+  }
+  
+  console.log("Respone Received:")
+  
+  console.log(JSON.stringify(resp))
+  
+  res.status(response.status).send(resp)
+  
   }
 }
